@@ -3,14 +3,12 @@ package com.example.poyearajpc.screens
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -24,20 +22,10 @@ import com.example.poyearajpc.ui.theme.Pink1488
 
 @Preview(showBackground = true)
 @Composable
-fun MainScreen() {
-    //фон
-    Image(
-        painter = painterResource(id = R.drawable.pepe),
-        contentDescription = "backgroundPepe",
-        modifier = Modifier
-            .fillMaxSize()
-            .alpha(0.7f),
-        contentScale = ContentScale.FillBounds
-    )
+fun MainCard() {
     //основной контейнер
     Column(
         modifier = Modifier
-            .fillMaxSize()
             .padding(5.dp)
     ) {
         Card(
@@ -116,8 +104,28 @@ fun MainScreen() {
                         )
                     }
                 }
+            }
+        }
+    }
+}
 
-
+@Composable
+fun TabLayout(){
+    val tabList = listOf("HOURS", "DAYS")
+    Column(modifier = Modifier.clip(RoundedCornerShape(5.dp))
+    ) {
+        TabRow(selectedTabIndex = 0,
+            indicator = {},
+            backgroundColor = Pink1488
+        ) {
+            tabList.forEachIndexed { index, text ->
+                Tab(selected = false,
+                    onClick = {
+                    },
+                    text = {
+                        Text(text = text)
+                    }
+                )
             }
         }
     }
