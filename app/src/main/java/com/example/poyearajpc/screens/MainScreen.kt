@@ -4,6 +4,8 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -44,6 +46,7 @@ fun MainScreen() {
             elevation = 0.dp,
             shape = RoundedCornerShape(10.dp)
         ) {
+
             Column(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally
@@ -51,7 +54,7 @@ fun MainScreen() {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween
-                ){
+                ) {
                     Text(
                         modifier = Modifier.padding(top = 8.dp, start = 8.dp),
                         text = "20 Jun 2022 13:00",
@@ -66,9 +69,56 @@ fun MainScreen() {
                             .size(35.dp)
                     )
                 }
+                Text(
+                    text = "Madrid",
+                    style = TextStyle(fontSize = 24.sp),
+                    color = Color.White
+                )
+                Text(
+                    text = "16°C",
+                    style = TextStyle(fontSize = 65.sp),
+                    color = Color.White
+                )
+                Text(
+                    text = "Sunny",
+                    style = TextStyle(fontSize = 16.sp),
+                    color = Color.White
+                )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    IconButton(onClick = {
+
+                    }
+                    ) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_baseline_search_24),
+                            contentDescription = "im3",
+                            tint = Color.White
+                        )
+                    }
+
+                    Text(
+                        text = "23°C/32°C",
+                        style = TextStyle(fontSize = 16.sp),
+                        color = Color.White
+                    )
+
+                    IconButton(onClick = {
+
+                    }
+                    ) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_baseline_sync_24),
+                            contentDescription = "im4",
+                            tint = Color.White
+                        )
+                    }
+                }
+
 
             }
-
         }
     }
 }
