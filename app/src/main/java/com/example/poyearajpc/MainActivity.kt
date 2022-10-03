@@ -1,5 +1,6 @@
 package com.example.poyearajpc
 
+import android.app.DownloadManager.Request
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -27,12 +28,13 @@ import com.example.poyearajpc.ui.theme.PoYearAjpcTheme
 import org.json.JSONObject
 
 
-const val API_KEY = "25aed3b18b12483ebe4103553222607"
+
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             PoYearAjpcTheme {
+                getData("London", this)
                 //фон
                 Image(
                     painter = painterResource(id = R.drawable.pepe),
@@ -101,4 +103,26 @@ private fun getResult(city: String, state: MutableState<String>, context: Contex
         }
     )
     queue.add(stringRequest)
+}
+
+private fun getData(city: String, context: Context) {
+    val url = "https://api.weatherapi.com/v1/forecast.json?key=" +
+            API_KEY +
+            "&q=" +
+            city +
+            "&days=1&aqi=no&alerts=no"
+
+    val queue = Volley.newRequestQueue(context)
+    val sRequest = StringRequest(
+        com.android.volley.Request.Method.GET,
+        url,
+        {
+        response ->
+            Log.d("MyLog", "Somethin' ok, my bro: $response ")
+        },
+        {
+            Log.d("MyLog", "Somethin' goes wrong, my bro: $it ")
+        }
+    )
+    queue.add(sRequest)
 }
