@@ -13,11 +13,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import com.example.poyearajpc.data.WeatherModel
 import com.example.poyearajpc.ui.theme.Pink1488
 
-@Preview(showBackground = true)
+
 @Composable
-fun ListItem() {
+fun ListItem(item: WeatherModel) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -39,21 +40,21 @@ fun ListItem() {
                 )
             ) {
                 Text(
-                    text = "12.00",
+                    text = item.time,
                     color = Color.White
                 )
                 Text(
-                    text = "Sunny",
+                    text = item.condition,
                     color = Color.White
                 )
             }
             Text(
-                text = "25°C",
+                text = item.currentTemp.ifEmpty { "${item.minTemp}/${item.maxTemp}" },
                 color = Color.White,
                 style = TextStyle(fontSize = 25.sp)
             )
             AsyncImage(
-                model = "https://cdn.weatherapi.com/weather/64x64/day/116.png",
+                model = "https:${item.icon}",
                 contentDescription = "im4",
                 modifier = Modifier
                     .padding(

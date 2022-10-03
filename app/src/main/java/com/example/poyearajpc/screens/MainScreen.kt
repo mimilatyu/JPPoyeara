@@ -3,6 +3,7 @@ package com.example.poyearajpc.screens
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -20,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.poyearajpc.R
+import com.example.poyearajpc.data.WeatherModel
 import com.example.poyearajpc.ui.theme.Pink1488
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
@@ -158,8 +160,30 @@ fun TabLayout(){
             LazyColumn(
                 modifier = Modifier.fillMaxSize()
             ) {
-                items(15){
-                    ListItem()
+                itemsIndexed(
+                    listOf(WeatherModel(
+                        "London",
+                        "10.00",
+                        "25°C",
+                        "Sunny",
+                        "//cdn.weatherapi.com/weather/64x64/night/113.png",
+                        "",
+                        "",
+                        ""
+                    ),
+                        WeatherModel(
+                            "London",
+                            "26.07.2022",
+                            "",
+                            "Sunny",
+                            "//cdn.weatherapi.com/weather/64x64/night/113.png",
+                            "32°C",
+                            "12°C",
+                            "something"
+                        )
+                    )
+                ){
+                    _, item -> ListItem(item)
                 }
             }
 
