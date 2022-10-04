@@ -38,7 +38,21 @@ class MainActivity : ComponentActivity() {
                 val daysList = remember {
                     mutableStateOf(listOf<WeatherModel>())
                 }
-                getData("London", this, daysList)
+
+                val currentDay = remember {
+                    mutableStateOf(WeatherModel(
+                        "",
+                        "",
+                        "10.0",
+                        "",
+                        "",
+                        "10.0",
+                        "10.0",
+                        "",
+                    ))
+                }
+
+                getData("London", this, daysList, currentDay)
                 //фон
                 Image(
                     painter = painterResource(id = R.drawable.pepe),
@@ -49,42 +63,13 @@ class MainActivity : ComponentActivity() {
                     contentScale = ContentScale.FillBounds
                 )
                 Column {
-                    MainCard()
+                    MainCard(currentDay)
                     TabLayout(daysList)
                 }
 
             }
         }
     }
-}
-
-@Composable
-fun Greeting(name: String, context: Context) {
-    val state = remember{
-        mutableStateOf("Unknown")
-    }
-    Column(modifier = Modifier.fillMaxSize()) {
-        Box(modifier = Modifier
-            .fillMaxHeight(0.5f)
-            .fillMaxWidth(),
-             contentAlignment =  Alignment.Center){
-            Text(text ="Temp in $name  ${state.value}")
-        }
-        Box(modifier = Modifier
-            .fillMaxHeight()
-            .fillMaxWidth(),
-            contentAlignment = Alignment.BottomCenter){
-            Button(onClick = {
-                getResult(name, state, context )
-
-            }, modifier = Modifier
-                .padding(5.dp)
-                .fillMaxWidth()) {
-                Text(text ="Refresh")
-            }
-        }
-    }
-
 }
 
 private fun getResult(city: String, state: MutableState<String>, context: Context){
@@ -109,7 +94,8 @@ private fun getResult(city: String, state: MutableState<String>, context: Contex
     queue.add(stringRequest)
 }
 
-private fun getData(city: String, context: Context, daysList: MutableState<List<WeatherModel>>) {
+private fun getData(city: String, context: Context, daysList: MutableState<List<WeatherModel>>,
+                    currentDay: MutableState<WeatherModel>) {
     val url = "https://api.weatherapi.com/v1/forecast.json?key=" +
             API_KEY +
             "&q=" +
@@ -123,6 +109,7 @@ private fun getData(city: String, context: Context, daysList: MutableState<List<
         {
         response ->
             val list = getWeatherByDays(response)
+            currentDay.value = list[0]
             daysList.value = list
         },
         {
@@ -158,7 +145,7 @@ private fun getWeatherByDays(response: String) : List<WeatherModel>{
     }
     list[0] = list[0].copy(
         time = mainObject.getJSONObject("current").getString("last_updated"),
-        currentTemp = mainObject.getJSONObject("current").getString("temp_c")
+        currentTemp = mainObject.getJSONObject("current").getString("temp_c")+"°C"
     )
     return list
 }
